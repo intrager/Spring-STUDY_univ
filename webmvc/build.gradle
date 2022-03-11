@@ -1,0 +1,23 @@
+plugins {
+    id 'war'
+    id 'java'
+}
+
+group 'iducs.spring'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.16'   // 컴파일이나 실행때나 필요함
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1' // compileOnly는 컴파일 때만 필요
+
+}
+
+test {
+    useJUnitPlatform()
+}
