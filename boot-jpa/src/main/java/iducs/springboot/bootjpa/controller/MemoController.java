@@ -16,7 +16,60 @@ public class MemoController {
 
     @Autowired
     MemberService memberService;
+    // MemberService ms = new MemberServiceImpl();
 
+    @GetMapping("/404")
+    public String get404() {
+        return "404";
+    }
+    @GetMapping("/blank")
+    public String getBlank() {
+        return "blank";
+    }
+    @GetMapping("/buttons")
+    public String getButtons() {
+        return "buttons";   // http://localhost:8888/buttons.html
+    }
+    @GetMapping("/cards")
+    public String getCards() {
+        return "cards";
+    }
+    @GetMapping("/forgot-password")
+    public String getForgotPassword() {
+        return "forgot-password";
+    }
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
+    @GetMapping("/register")
+    public String getRegister() {
+        return "register";
+    }
+    @GetMapping("/utilities-animation")
+    public String getUtilitiesAnimation(){
+        return "utilities-animation";
+    }
+    @GetMapping("/utilities-border")
+    public String getUtilitiesBorder(){
+        return "utilities-border";
+    }
+    @GetMapping("/utilities-color")
+    public String getUtilitiesColor(){
+        return "utilities-color";
+    }
+    @GetMapping("/utilities-other")
+    public String getUtilitiesOther(){
+        return "utilities-other";
+    }
+
+    @GetMapping("/th")
+    public String getThymeleaf() {
+        return "thymeleaf";
+    }
+
+    // tables.html 파일 리팩토링
+    // 실질적으로 static과 templates가 최상위 디렉토리이다.
     @GetMapping("/tables")
     public String getTables() {
         return "tables";
