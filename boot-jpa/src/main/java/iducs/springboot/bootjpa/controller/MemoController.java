@@ -1,95 +1,76 @@
 package iducs.springboot.bootjpa.controller;
 
+import iducs.springboot.bootjpa.domain.Memo;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.service.MemberService;
+import iducs.springboot.bootjpa.service.MemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/memos")
 public class MemoController {
+    // MemoService 인터페이스로부터 구현 가능한 객체를 생성해서 주입
+    // Spring Bean 객체로 구현했기 때문에 Spring이 주입할 수 있음
 
-    @Autowired
-    MemberService memberService;
-    // MemberService ms = new MemberServiceImpl();
+    final MemoService memoService;  // 참조변수명 memoService
 
-    @GetMapping("/404")
-    public String get404() {
-        return "404";
-    }
-    @GetMapping("/blank")
-    public String getBlank() {
-        return "blank";
-    }
-    @GetMapping("/buttons")
-    public String getButtons() {
-        return "buttons";   // http://localhost:8888/buttons.html
-    }
-    @GetMapping("/cards")
-    public String getCards() {
-        return "cards";
-    }
-    @GetMapping("/forgot-password")
-    public String getForgotPassword() {
-        return "forgot-password";
-    }
-    @GetMapping("/login")
-    public String getLogin() {
-        return "login";
-    }
-    @GetMapping("/register")
-    public String getRegister() {
-        return "register";
-    }
-    @GetMapping("/utilities-animation")
-    public String getUtilitiesAnimation(){
-        return "utilities-animation";
-    }
-    @GetMapping("/utilities-border")
-    public String getUtilitiesBorder(){
-        return "utilities-border";
-    }
-    @GetMapping("/utilities-color")
-    public String getUtilitiesColor(){
-        return "utilities-color";
-    }
-    @GetMapping("/utilities-other")
-    public String getUtilitiesOther(){
-        return "utilities-other";
+    public MemoController(MemoService memoService) {
+        this.memoService = memoService;
     }
 
-    @GetMapping("/th")
-    public String getThymeleaf() {
-        return "thymeleaf";
+    // registration form
+    @GetMapping("/regform")
+    public String getRegform(Model model) {
+        model.addAttribute("memo", Memo.builder().build());
+        return "/memos/regform";
     }
 
-    // tables.html 파일 리팩토링
-    // 실질적으로 static과 templates가 최상위 디렉토리이다.
-    @GetMapping("/tables")
-    public String getTables() {
-        return "tables";
+    // HttpServletRequest request
+    @PostMapping("")
+    public String postMemo(@ModelAttribute("memo") Memo memo, Model model) {
+        memoService.create(memo);
+        model.addAttribute("memo", memo);
+        return "/memos/memo";
     }
-    @GetMapping("/charts")
-    public String getCharts() {
-        return "charts";
+
+    @GetMapping("")
+    public String getMemos(Model model) {
+        List<Memo> memos = memoService.readAll();
+        model.addAttribute("list", memos);
+        return "/memos/home";
     }
 
     @GetMapping("/{idx}")
-    public String getMember(@PathVariable("idx") Long seq, Model model) {
-        Optional<MemberEntity> member = memberService.readById(seq);
-        MemberEntity m = member.get();
-        model.addAttribute("member", m);
-        return "charts";
+    public String getMemo(@PathVariable("idx") Long mno, Model model) {
+        Memo memo = memoService.readById(mno);
+        model.addAttribute("memo", memo);
+        return "/memos/memo";
     }
-    @GetMapping("/")
-    public String getIndex(Model model) {
-        List<MemberEntity> list = memberService.readAll();
-        model.addAttribute("members", list);
-        return "index";
+
+    // localhost:8888/memos/13/upform
+    @GetMapping("/{idx}/upform")
+    public String getUpform(@PathVariable("idx") Long mno, Model model) {
+        Memo memo = memoService.readById(mno);  // entity -> domain
+        model.addAttribute("memo", memo);
+        return "/memos/upform";
+    }
+
+    @PutMapping("/{idx}")
+    public String putMemo(@ModelAttribute("memo") Memo memo, Model model) {
+        memoService.update(memo);
+        model.addAttribute("memo", memo);
+        return "/memos/memo";
+    }
+
+    @DeleteMapping("/{idx}")
+    public String deleteMemo(@ModelAttribute("idx") Long mno) {
+        memoService.delete(mno);
+        return "redirect:/memos";
     }
 }
