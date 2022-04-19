@@ -2,28 +2,38 @@ package iducs.springboot.bootjpa.service;
 
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 
-    @Autowired
-    MemberRepository memberRepository;  // DI(Dependency Injection)
-    /*
+    final MemberRepository memberRepository;  // DI(Dependency Injection)
+
     public MemberServiceImpl(MemberRepository memberRepository) {
-        MemberRepository memberRepository = memberRepository;
-        MemberRepository memberRepository = new MemberAccessImpl();
-        MemberRepository memberRepository = new MemberDAOImpl();
-     }
-     */
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public int create(MemberEntity member) {
-        return 0;
+        int ret = 0;
+        try {
+            MemberEntity entity = MemberEntity.builder()
+                    .seq(member.getSeq())
+                    .id(member.getId())
+                    .pw(member.getPw())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .phone(member.getPhone())
+                    .address(member.getAddress())
+                    .build();
+            memberRepository.save(entity);
+            ret++;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     @Override
@@ -31,10 +41,10 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(seq);
     }
 
-    @Override
-    public Optional<MemberEntity> readId(String id) {
-        return Optional.empty();
-    }
+//    @Override
+//    public Optional<MemberEntity> readId(String id) {
+//        return Optional.empty();
+//    }
 
     @Override
     public List<MemberEntity> readAll() {
@@ -43,11 +53,34 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public int update(MemberEntity member) {
-        return 0;
+        int ret = 0;
+        try {
+            MemberEntity entity = MemberEntity.builder()
+                    .seq(member.getSeq())
+                    .id(member.getId())
+                    .pw(member.getPw())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .phone(member.getPhone())
+                    .address(member.getAddress())
+                    .build();
+            memberRepository.save(entity);
+            ret++;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     @Override
     public int delete(MemberEntity member) {
-        return 0;
+        int ret = 0;
+        try {
+            memberRepository.delete(member);
+            ret++;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 }

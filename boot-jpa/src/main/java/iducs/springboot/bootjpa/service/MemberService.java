@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface MemberService {
     int create(MemberEntity member);
     Optional<MemberEntity> readById(Long seq);
-    Optional<MemberEntity> readId(String id);
+    // Optional<MemberEntity> readId(String id);
     List<MemberEntity> readAll();
     int update(MemberEntity member);
     int delete(MemberEntity member);

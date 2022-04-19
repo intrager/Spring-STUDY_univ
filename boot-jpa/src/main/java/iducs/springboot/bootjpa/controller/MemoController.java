@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/memos")
+@RequestMapping("/memos")   // localhost:8888/memos로 시작
 public class MemoController {
     // MemoService 인터페이스로부터 구현 가능한 객체를 생성해서 주입
     // Spring Bean 객체로 구현했기 때문에 Spring이 주입할 수 있음

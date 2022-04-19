@@ -4,9 +4,6 @@ import iducs.springboot.bootjpa.domain.Memo;
 import iducs.springboot.bootjpa.entity.MemoEntity;
 import iducs.springboot.bootjpa.repository.MemoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
