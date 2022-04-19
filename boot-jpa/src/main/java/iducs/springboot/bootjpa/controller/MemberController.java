@@ -1,5 +1,6 @@
 package iducs.springboot.bootjpa.controller;
 
+import iducs.springboot.bootjpa.domain.MemberDTO;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class MemberController {
 
     // 멤버 등록
     @PostMapping("")
-    public String postMember(@ModelAttribute("member") MemberEntity member, Model model) {
+    public String postMember(@ModelAttribute("member") MemberDTO member, Model model) {
         if(memberService.create(member) > 0) {
             model.addAttribute("member", member);
             return "/members/member";
@@ -66,7 +67,7 @@ public class MemberController {
 
     // 멤버 정보 수정
     @PutMapping("/{idx}")
-    public String putMember(@ModelAttribute("member") MemberEntity member, Model model) {
+    public String putMember(@ModelAttribute("member") MemberDTO member, Model model) {
         if(memberService.update(member) > 0) {
             model.addAttribute("member", member);
             return "/members/member";

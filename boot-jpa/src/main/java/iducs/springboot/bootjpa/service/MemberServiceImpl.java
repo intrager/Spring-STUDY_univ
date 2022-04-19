@@ -1,5 +1,6 @@
 package iducs.springboot.bootjpa.service;
 
+import iducs.springboot.bootjpa.domain.MemberDTO;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int create(MemberEntity member) {
+    public int create(MemberDTO member) {
         int ret = 0;
         try {
             MemberEntity entity = MemberEntity.builder()
@@ -52,7 +53,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int update(MemberEntity member) {
+    public int update(MemberDTO member) {
         int ret = 0;
         try {
             MemberEntity entity = MemberEntity.builder()
