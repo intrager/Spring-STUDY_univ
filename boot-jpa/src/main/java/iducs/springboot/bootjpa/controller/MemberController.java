@@ -3,12 +3,9 @@ package iducs.springboot.bootjpa.controller;
 import iducs.springboot.bootjpa.domain.MemberDTO;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +71,6 @@ public class MemberController {
         }
         else model.addAttribute("member", member);
         return "/members/upform";
-
     }
 
     // 멤버 삭제
@@ -88,19 +84,6 @@ public class MemberController {
         model.addAttribute("member", m);
         return "/members/member";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // MemberService ms = new MemberServiceImpl();
