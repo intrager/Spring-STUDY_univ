@@ -1,6 +1,6 @@
 package iducs.springboot.bootjpa.controller;
 
-import iducs.springboot.bootjpa.domain.MemberDTO;
+import iducs.springboot.bootjpa.domain.Member;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ public class MemberController {
 
     final MemberService memberService;
 
+    // 생성자 주입 : (Constructor Injection) vs. @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
@@ -22,24 +23,23 @@ public class MemberController {
     // registration form 멤버 등록 페이지
     @GetMapping("/regform")
     public String getRegform(Model model) {
+        // 정보를 전달받을 빈(empty) 객체를 보냄
         model.addAttribute("member", MemberEntity.builder().build());
-        return "/members/regform";
+        return "/members/regform";  // view resolving
     }
 
     // 멤버 등록
     @PostMapping("")
-    public String postMember(@ModelAttribute("member") MemberDTO member, Model model) {
-        if(memberService.create(member) > 0) {
-            model.addAttribute("member", member);
-            return "/members/member";
-        }
-        else return "/members/regform";
+    public String postMember(@ModelAttribute("member") Member member, Model model) {
+        memberService.create(member);
+        model.addAttribute("member", member);
+        return "/members/info";
     }
 
     // 멤버 메인 페이지
     @GetMapping("")
     public String getIndex(Model model) {
-        List<MemberEntity> members = memberService.readAll();
+        List<Member> members = memberService.readAll();
         model.addAttribute("list", members);
         return "/members/home";
     }
@@ -50,7 +50,7 @@ public class MemberController {
         Optional<MemberEntity> member = memberService.readById(seq);
         MemberEntity m = member.get();
         model.addAttribute("member", m);
-        return "/members/member";
+        return "/members/info";
     }
 
     // 수정 페이지
@@ -64,25 +64,17 @@ public class MemberController {
 
     // 멤버 정보 수정
     @PutMapping("/{idx}")
-    public String putMember(@ModelAttribute("member") MemberDTO member, Model model) {
-        if(memberService.update(member) > 0) {
-            model.addAttribute("member", member);
-            return "/members/member";
-        }
-        else model.addAttribute("member", member);
-        return "/members/upform";
+    public String putMember(@ModelAttribute("member") Member member, Model model) {
+        memberService.update(member);
+        return "/members/info";
     }
 
     // 멤버 삭제
     @DeleteMapping("/{idx}")
     public String deleteMember(@ModelAttribute("idx") Long seq, Model model) {
-        Optional<MemberEntity> member = memberService.readById(seq);
-        MemberEntity m = member.get();
-        if(memberService.delete(m) > 0) {
-            return "redirect:/members";
-        }
-        model.addAttribute("member", m);
-        return "/members/member";
+        Member member = memberService.readById(seq);
+        memberService.delete(member);
+        return "redirect:/members";
     }
 
 

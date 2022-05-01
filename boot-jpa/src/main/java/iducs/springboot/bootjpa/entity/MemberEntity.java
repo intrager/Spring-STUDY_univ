@@ -4,16 +4,19 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="t_member")
-@ToString
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberEntity {
+// Spring Data 관련 Annotations
+@Entity // Spring Data Jpa의 엔티티(entity, 개체)임을 나타냄
+@Table(name="tbl_member")
 
+// Lombok 관련 Annotations
+@ToString   // toString() 생성
+@Getter     // getter() 생성
+@Setter     // setter() 추가
+@Builder
+@NoArgsConstructor  // 모든 매개변수를 갖는 생성자
+@AllArgsConstructor // 디폴트 생성자(아무런 매개변수가 없음)
+public class MemberEntity {
+    // entity -> repository에서 주로 사용됨
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long seq;   // long 기본형 Wrapper 클래스

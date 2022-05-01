@@ -1,6 +1,6 @@
 package iducs.springboot.bootjpa.service;
 
-import iducs.springboot.bootjpa.domain.MemberDTO;
+import iducs.springboot.bootjpa.domain.Member;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
+    // service : controller <-> repository, domain to entity. entity to domain
     final MemberRepository memberRepository;  // DI(Dependency Injection)
 
     public MemberServiceImpl(MemberRepository memberRepository) {
@@ -17,71 +18,52 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int create(MemberDTO member) {
-        int ret = 0;
-        try {
-            MemberEntity entity = MemberEntity.builder()
-                    .seq(member.getSeq())
-                    .id(member.getId())
-                    .pw(member.getPw())
-                    .name(member.getName())
-                    .email(member.getEmail())
-                    .phone(member.getPhone())
-                    .address(member.getAddress())
-                    .build();
-            memberRepository.save(entity);
-            ret++;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ret;
+    public void create(Member member) {
+        MemberEntity entity = dtoToEntity(member);
+        memberRepository.save(entity);
     }
 
     @Override
-    public Optional<MemberEntity> readById(Long seq) {
+    public Member readById(Long seq) {
         return memberRepository.findById(seq);
     }
 
-//    @Override
-//    public Optional<MemberEntity> readId(String id) {
-//        return Optional.empty();
-//    }
-
     @Override
-    public List<MemberEntity> readAll() {
+    public List<Member> readAll() {
         return memberRepository.findAll();
     }
 
     @Override
-    public int update(MemberDTO member) {
-        int ret = 0;
-        try {
-            MemberEntity entity = MemberEntity.builder()
-                    .seq(member.getSeq())
-                    .id(member.getId())
-                    .pw(member.getPw())
-                    .name(member.getName())
-                    .email(member.getEmail())
-                    .phone(member.getPhone())
-                    .address(member.getAddress())
-                    .build();
-            memberRepository.save(entity);
-            ret++;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ret;
+    public void update(Member member) {
+        MemberEntity entity = dtoToEntity(member);
+        memberRepository.save(entity);
     }
 
     @Override
-    public int delete(MemberEntity member) {
-        int ret = 0;
-        try {
-            memberRepository.delete(member);
-            ret++;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ret;
+    public void delete(Member member) {
+        memberRepository.deleteById();
+    }
+
+    @Override
+    public Member readByName(Member member) {
+        return null;
+    }
+
+    @Override
+    public Member readByEmail(String email) {
+        return null;
+    }
+
+    private MemberEntity dtoToEntity(Member member) {
+        MemberEntity entity = MemberEntity.builder()
+                .seq(member.getSeq())
+                .id(member.getId())
+                .pw(member.getPw())
+                .name(member.getName())
+                .email(member.getEmail())
+                .phone(member.getPhone())
+                .address(member.getAddress())
+                .build();
+        return entity;
     }
 }
