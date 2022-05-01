@@ -4,6 +4,8 @@ import iducs.springboot.bootjpa.domain.Member;
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +27,29 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member readById(Long seq) {
-        return memberRepository.findById(seq);
+        Member member = null;
+
+        Optional<MemberEntity> result = memberRepository.findById(seq);
+        if(result.isPresent()) {
+            member = entityToDto(result.get());
+        }
+        /*
+        MemberEntity result = memberRepository.getById(seq);
+        member = entityToDto(result);
+        */
+        return member;
     }
 
     @Override
     public List<Member> readAll() {
-        return memberRepository.findAll();
+        List<Member> members = new ArrayList<>();   // 반환 리스트 객체
+        // JpaRepository 구현체의 메서드 findAll(), List<T>
+        List<MemberEntity> entities = memberRepository.findAll();   // entity들
+        for(MemberEntity entity : entities) {
+            Member member = entityToDto(entity);
+            members.add(member);
+        }
+        return members;
     }
 
     @Override
@@ -41,7 +60,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void delete(Member member) {
-        memberRepository.deleteById();
+        MemberEntity entity = dtoToEntity(member);
+        memberRepository.deleteById(entity.getSeq());   // 유일키로 지운다
+        // memberRepository.delete(entity);
     }
 
     @Override
@@ -65,5 +86,19 @@ public class MemberServiceImpl implements MemberService {
                 .address(member.getAddress())
                 .build();
         return entity;
+    }
+
+    // Service -> Controller : entity -> dto로 변환 후 반환
+    private Member entityToDto(MemberEntity entity) {
+        Member member = Member.builder()
+                .seq(entity.getSeq())
+                .id(entity.getId())
+                .pw(entity.getPw())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .phone(entity.getPhone())
+                .address(entity.getAddress())
+                .build();
+        return member;
     }
 }

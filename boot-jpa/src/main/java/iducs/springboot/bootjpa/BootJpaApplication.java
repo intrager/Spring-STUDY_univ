@@ -48,3 +48,46 @@ public class BootJpaApplication {
     builderStream.add("Elena");
     builderStream.add("Java");
  */
+
+/**
+ * Delete 동작 : 폼을 띄운다 -> 삭제한다.
+ * 1. URL : /members/{idx}/delform <---> '/members' + ${member.seq} + '/delform'
+ * 2. Controller - @GetMapping('/members/{idx}/delform')
+ *      public String getDelform(@PathVariable("idx") Long seq, Model model)
+ *   // service & repository 활용 findById(seq) : seq에 해당하는 member 객체 가져오기
+ *      model.addAttribute("member", member);   // member 속성이름, 값
+ *      return "/members/delform";  // delform.html에 member 속성의 값을 넘김
+ *
+ * 3. URL : /members/delform
+ * th:action="@{'/members/' + ${member.seq}}" th:object="${member}" th:method="delete"
+ *
+ * 4. Controller : @DeleteMapping('/members/{idx}') // {idx} member primary key
+ *      public String getDelete(@ModelAttribute("member") Member member, Model model)
+ *      1) memberService.deleteById(seq);   // idx로 식별되는 member 객체
+ *      2) memberService.delete(member);    // member 객체
+ *      return "redirect:/members";    // 다시 컨트롤러에게 요청 - /members : 목록
+ *
+ *   Model : Controller에서 form으로 전송할  애트리뷰트
+ *   @ModelAttribute : form에서 전송된 애트리뷰트 객체 접근
+ *
+ *   /members/{idx} 입력      {idx} member primary key
+ *
+ *   URN + URL = URI
+ *
+ *   문제 해결
+ *      URI + HTTP Method
+ *      Create Read Update Delete, Partial Update
+ *      ( (Get,) Post, Put, Delete, Patch)
+ *   처리 요청 -> DTO -> Controller -> DTO -> Service -> Entity -> Repository -> DBMS
+ *                      Controller <- DTO <-         <- Entity <-            <-
+ *   Client          [<- View]                                       Spring JPA - Hibernate
+ *                                                                   Spring Data JDBC-MyBatis
+ *                                                                          JDBC
+ *   - Controller : 요청 흐름 제어, Java Code <- Servlet
+ *   - View : 응답(response)을 화면에 출력, Thymeleaf 활용
+ *   - Service : 업무 처리 담당(통계, 검색, 정렬), DTO -> Entity, Entity -> DTO
+ *   - Repository : 데이터 접근 처리
+ *
+ *   - 문제 범위 : 도메인, 업무 범위, 업무 관점의 객체, DTO
+ *   - 자료라기 보다는 데이터 접근 관점, 엔티티 - 데이터 처리 관점의 객체, Entity
+ */
