@@ -24,7 +24,7 @@ public class MemberController {
     @GetMapping("/regform")
     public String getRegform(Model model) {
         // 정보를 전달받을 빈(empty) 객체를 보냄
-        model.addAttribute("member", MemberEntity.builder().build());
+        model.addAttribute("member", Member.builder().build());
         return "/members/regform";  // view resolving
     }
 
@@ -84,29 +84,6 @@ public class MemberController {
     public String deleteMember(@ModelAttribute("idx") Long seq) {
         Member member = memberService.readById(seq);
         memberService.delete(member);
-        return "redirect:/members";
-    }
-
-
-    // MemberService ms = new MemberServiceImpl();
-    @GetMapping("/buttons") // url - http://localhost:8888/buttons
-    public String getButtons() {
-        return "buttons"; // http://localhost:8888/buttons.html
-    }
-    @GetMapping("/cards") // url - http://localhost:8888/buttons
-    public String getCards() {
-        return "cards"; // http://localhost:8888/buttons.html
-    }
-    @GetMapping("/th")
-    public String getThymeleaf() {
-        return "thymeleaf";
-    }
-    @GetMapping("/tables")
-    public String getTables() {
-        return "tables";
-    }
-    @GetMapping("/charts")
-    public String getCharts() {
-        return "charts";
+        return "redirect:member/members";
     }
 }
