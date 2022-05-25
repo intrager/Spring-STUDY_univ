@@ -14,7 +14,6 @@ import java.util.Optional;
 public class MemberController {
 
     final MemberService memberService;
-
     // 생성자 주입 : (Constructor Injection) vs. @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
@@ -39,9 +38,10 @@ public class MemberController {
     // 멤버 메인 페이지
     @GetMapping("")
     public String getIndex(Model model) {
+        // PageRequestDTO.builder().build() or new PageRequestDTO() 가 pageRequestDTO 매개변수에 배정
         // 정보를 전달받을 빈(empty) 객체를 보냄
-        List<Member> members = memberService.readAll();
-        model.addAttribute("list", members);
+        // List<Member> members = memberService.readAll();
+        model.addAttribute("list", memberService.readListBy(pageRequestDTO));   // .getDtoList()까지 쓰는 건 비추
         return "/members/members";
     }
 
@@ -50,7 +50,7 @@ public class MemberController {
     public String getMember(@PathVariable("idx") Long seq, Model model) {
         Member member = memberService.readById(seq);
         model.addAttribute("member", member);
-        return "/members/member";
+        return "/members/member";   // view resolving : member.html
     }
 
     // 수정 페이지
@@ -64,7 +64,7 @@ public class MemberController {
 
     // 멤버 정보 수정
     @PutMapping("/{idx}")
-    public String putMember(@ModelAttribute("member") Member member, Model model) {
+    public String putMember(@ModelAttribute("member") Member member, Model model) { // ModelAttribute는 form에서 가져오는 거
         memberService.update(member);
         model.addAttribute("member", member);
         return "/members/upform";
