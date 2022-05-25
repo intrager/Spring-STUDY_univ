@@ -22,10 +22,10 @@ public class PageResultDTO<DTO, EN> {   // Generics
 
     // 페이지 번호 목록
     private List<Integer> pageList;
-    public PageResultDTO(Page<EN> result, Function<EN, DTO> fn) {
-        dtoList = result.stream().map(fn).collect(Collectors.toList());
+    public PageResultDTO(Page<EN> result, Function<EN, DTO> fn) {   // 결과 페이지 객체를 초기화하는 생성자
+        dtoList = result.stream().map(fn).collect(Collectors.toList()); // 데이터 담당
         totalPage = result.getTotalPages();
-        makePageList(result.getPageable());
+        makePageList(result.getPageable()); // 리스트 담당
     }
 
     public void makePageList(Pageable pageable) {
@@ -37,6 +37,15 @@ public class PageResultDTO<DTO, EN> {   // Generics
 
         // currentPage = 12, 12 / 10.0 = 1.2 -> Math.ceil(1.2) 올림 2 * 10 : 20
         // startPage 11, end 20
+
+        // 페이지 목록 번호 크기(sizeOfPage) 5 -> 5.0
+        // 현재 페이지 3, 1 ~ 5 페이지 목록 : 3 / 5.0 = 0.6 -> ceil() 올림 : 1,
+        // 마지막 페이지 1 * 페이지 목록 번호 크기 5 = 5
+        // 현재 페이지 7, 6 ~ 10 페이지 목록 : 7 / 5.0 = 1.4 -> ceil() 올림 : 2,
+        // 마지막 페이지 2 * 5 = 10
+        // totalPage 13, 현재 페이지가 3인 경우 Prev 나오지 않지만, Next는 있음
+        // 현재 페이지가 12면, 마지막 페이지가 15이어야 하나 13으로 되며, Next 안 나타남
+
         int tempEnd = (int)(Math.ceil(currentPage/pageDouble)) * sizeOfPage;
 
         startPage = tempEnd - (sizeOfPage - 1);

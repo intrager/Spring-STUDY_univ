@@ -2,10 +2,14 @@ package iducs.springboot.bootjpa.repository;
 
 import iducs.springboot.bootjpa.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+public interface MemberRepository extends
+        JpaRepository<MemberEntity, Long>,
+        QuerydslPredicateExecutor<MemberEntity>
+{
     // CRUD 가 모두 구현되어 있음
     // JDBC 프로그래밍 순서
     // 사용할 자원 선언(Connection 선언, Statement 선언, ResultSet 선언)

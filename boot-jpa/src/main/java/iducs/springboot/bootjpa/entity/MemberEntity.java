@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class MemberEntity {
     // entity -> repository에서 주로 사용됨
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;   // long 기본형 Wrapper 클래스
 
     @Column(length = 30, nullable = false)
@@ -36,6 +36,6 @@ public class MemberEntity {
     @Column(length = 30, nullable = true)
     private String phone;
 
-    @Column(length = 100, nullable = true)
+    @Column(length = 100)
     private String address;
 }

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 public class PageRequestDTO {   // 페이지 처리를 위한 객체
     private int page;   // 요청하는 페이지
     private int size;   // 한 페이지에 나타나는 수
+    private String type;    // e - email, p - phone, a - address로 검색 항목
+    private String keyword; // 검색어
 
     public PageRequestDTO() {
         this.page = 1;
