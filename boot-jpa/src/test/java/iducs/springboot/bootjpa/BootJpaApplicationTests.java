@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Random;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -20,10 +21,15 @@ class BootJpaApplicationTests {
     @Test   // Unit Test : JUnit 도구 활용 -> 통합 테스트(Integration Test)
     void contextLoads() {
         // Integer 데이터 흐름, Lambda식 - 함수형 언어의 특징을 활용
-        IntStream.rangeClosed(1, 10).forEach(i -> {
-            MemberEntity member =
-                    MemberEntity.builder().id("id " + i)
-                            .pw("pw " + i).name("name " + i).build();
+        IntStream.rangeClosed(1, 50).forEach(i -> {
+            MemberEntity member = MemberEntity.builder()
+                    .id("id " + i)
+                    .pw("pw " + i)
+                    .name("name " + i)
+                    .email("email " + new Random().nextInt(100))
+                    .phone("phone " + new Random().nextInt(50))
+                    .address("address " + i)
+                    .build();
             memberRepository.save(member);
         });
     }

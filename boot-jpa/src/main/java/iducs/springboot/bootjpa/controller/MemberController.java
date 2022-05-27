@@ -68,7 +68,7 @@ public class MemberController {
     public String putMember(@ModelAttribute("member") Member member, Model model) { // ModelAttribute는 form에서 가져오는 거
         memberService.update(member);
         model.addAttribute("member", member);
-        return "/members/upform";
+        return "/members/member";
     }
 
     // 삭제 페이지
@@ -85,6 +85,6 @@ public class MemberController {
     public String deleteMember(@ModelAttribute("idx") Long seq) {
         Member member = memberService.readById(seq);
         memberService.delete(member);
-        return "redirect:member/members";
+        return "redirect:/members";
     }
 }

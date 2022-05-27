@@ -119,6 +119,12 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
+
+    /**
+     * 주의 : DTO와 Entity의 pk number의 자료형을 똑같이 맞출 것
+     * @param member
+     * @return
+     */
     private MemberEntity dtoToEntity(Member member) {
         MemberEntity entity = MemberEntity.builder()
                 .seq(member.getSeq())
