@@ -2,13 +2,10 @@ package iducs.springboot.bootjpa.controller;
 
 import iducs.springboot.bootjpa.domain.Member;
 import iducs.springboot.bootjpa.domain.PageRequestDTO;
-import iducs.springboot.bootjpa.entity.MemberEntity;
 import iducs.springboot.bootjpa.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/members") // localhost:8888/memobers로 시작
