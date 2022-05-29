@@ -853,26 +853,19 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Bordered Table</h3>&nbsp;&nbsp;
                 <a th:href="@{'/members/regform'}" class="btn btn-sm btn-primary">
-                  <i class="fa-solid fa-registered">Register</i>
+                  <i class="fas fa-registered">Register</i>
                 </a>
                 <form th:action="@{'/members'}" th:method="get">
-                  <div class="form-group clearfix">
-                    <div class="icheck-primary d-inline">
-                      <input type="radio" id="radioPrimary1" name="r1" checked="">
-                      <label for="radioPrimary1">
-                      </label>
-                    </div>
-                    <div class="icheck-primary d-inline">
-                      <input type="radio" id="radioPrimary2" name="r1">
-                      <label for="radioPrimary2">
-                      </label>
-                    </div>
-                  </div>
                   <div class="card-tools">
-                      <div class="input-group input-group-sm" style="width: 350px;">
-                        <select class="form-control" name="type">
+                    <div class="input-group input-group-sm" style="width: 350px;">
+                        <label class="btn btn-secondary active">
+                          <input type="radio" name="sort" id="option_a2" autocomplete="off" value="1" checked> 오름차순
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="sort" id="option_a3" autocomplete="off" value="2"> 내림차순
+                        </label>
+                        <select class="form-control" name="type" style="flex-basis:fit-content">
                           <option value=""> 선택 </option>
                           <option value="e">email</option>
                           <option value="p">phone</option>
@@ -887,11 +880,11 @@
                           </button>
                         </div>
                       </div>
-                    </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
-              <!-- /.card-header -->
+            </div>
+            <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered">
                   <thead>

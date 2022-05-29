@@ -90,4 +90,38 @@ public class BootJpaApplication {
  *
  *   - 문제 범위 : 도메인, 업무 범위, 업무 관점의 객체, DTO
  *   - 자료라기 보다는 데이터 접근 관점, 엔티티 - 데이터 처리 관점의 객체, Entity
+ *
+ *   ######################################################################################### 5/19
+ *   Controller <-> Service <-> Repository
+ *   - View (Template Engine : Thymeleaf) 처리 방식
+ *   - REST 방식
+ *   - Domain(DTO, VO) vs Entity
+ *
+ *   DB 프로그래밍 기본 연산 : CRUD - JPA로 아주 쉽게 처리 가능
+ *   - create, read(one, list), update, delete
+ *
+ *   Pagination
+ *   - 단순 페이지 처리 vs 검색 조건에 따른 페이지 처리
+ *   - Page, Pageable 클래스 활용
+ *
+ *   Sort
+ *
+ *   Search
+ *   - 검색 조건과 관련 있음
+ *  ######################################################################################### 5/26
+ *  Entity -> Domain -> Repository -> Service 순으로 만들 예정
+ *  1. 데이터베이스에 테이블 생성을 위한 entity 객체 정의
+ *  2. entity 객체들간의 관계를 고려하여 domain 객체(dto 객체) 정의
+ *  3. entity 객체를 활용하여 실제로 데이터베이스 접근(CRUD 연산 등)을 수행하는 repository 객체 정의 (@Repository - Querydsl, JPQL 추가)
+ *  4. service 인터페이스와 service 구현체를 정의 (@Service)
+ *  5. 요청의 흐름을 고려하여 URI에 매핑하는 controller 객체 정의 (메서드 지정)
+ *  (@Controller)
+ *  6.1 요청의 흐름에 따라 View단 처리 - HTML Template (Thymeleaf 같은 엔진 포함) 수정
+ *  6.2 요청의 흐름에 맞게 자료 전달 (REST API 방식, 즉 RESTful API)
+ *
+ * Querydsl을 다루다보면 잘 입력했음에도 불구하고 의존성 오류가 자주 발생함. 이 부분에 대해서는 따로 포스팅을 해야겠음.
+ * MyBatis를 굳이 쓰는 이유 중 하나가 될 수도 있겠다.
+ *
+ * Controller -> DTO/Domain -> Service -> Entity -> Repository -> DBMS
+ * Controller <- DTO/Domain <- Service <- Entity <- Repository <- DBMS
  */

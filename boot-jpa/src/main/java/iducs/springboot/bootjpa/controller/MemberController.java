@@ -35,7 +35,7 @@ public class MemberController {
 
     // 멤버 메인 페이지
     @GetMapping("")
-    public String getIndex(PageRequestDTO pageRequestDTO, Model model) {
+    public String getMembers(PageRequestDTO pageRequestDTO, Model model) {
         // PageRequestDTO.builder().build() or new PageRequestDTO() 가 pageRequestDTO 매개변수에 배정
         // 정보를 전달받을 빈(empty) 객체를 보냄
         // List<Member> members = memberService.readAll();

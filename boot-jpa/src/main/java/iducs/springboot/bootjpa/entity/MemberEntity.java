@@ -30,7 +30,7 @@ public class MemberEntity {
     @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 50, nullable = true)
+    @Column(length = 50, nullable = false)
     private String email;
 
     @Column(length = 30, nullable = true)

@@ -18,6 +18,7 @@ class BootJpaApplicationTests {
     @Autowired
     MemberRepository memberRepository;  // MemberRepository 클래스형 객체를 Spring을 통하여 생성
 
+    // sequence number 1 ~ 50 넣을거니까 상관없지? 라는 의미의 테스트 코드
     @Test   // Unit Test : JUnit 도구 활용 -> 통합 테스트(Integration Test)
     void contextLoads() {
         // Integer 데이터 흐름, Lambda식 - 함수형 언어의 특징을 활용
