@@ -15,9 +15,11 @@ public class Board {
     private String content; // <- BoardEntity
     private LocalDateTime regDate;  // <-- BoardEntity <-- BaseEntity // 게시글 등록
     private LocalDateTime modDate;  // <-- BoardEntity <-- BaseEntity
+
     private Long writerSeq; // <- MemberEntity
     private String writerId;
     private String writerName;
     private String writerEmail;
+
     private int replyCount; // 추가적인 필드 : 게시물이 댓글 수
 }
