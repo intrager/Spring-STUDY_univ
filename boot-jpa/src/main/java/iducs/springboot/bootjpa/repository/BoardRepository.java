@@ -14,7 +14,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     @Query("select b, w from BoardEntity b left join b.writer w where b.bno =:bno")
     Object getBoardWithWriter(@Param("bno") Long bno);
 
-    // JPQL : Java
+    @Query("select b, w, count(r) " +
+            "from BoardEntity b left join b.writer w " +
+            "left join ReplyEntity r on r.board = b where b.bno = :bno")
+    Object getBoardByBno(@Param("bno") Long bno);
+
+    // JPQL : Java Persistence Query Language, 복합 질의 등 복잡한 질의를 자바 객체 기반으로 처리하는 언어
     @Query(value = "select b, w, count(r) " +
         "from BoardEntity b left join b.writer w " +
         "left join ReplyEntity r on r.board = b " +
@@ -22,5 +27,3 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
         countQuery = "select count(b) from BoardEntity b")
     Page<Object[]> getBoardWithReplyCount(Pageable pageable);
 }
-// 교수님께서는 왜 이 Query 구문이 나오는 코드를 좋아하지 않는다고 하신 걸까
-//// 개인적으로는 JPA라지만, 그래도 query를 가끔씩은 쳐보는 것도 이유가 있어서가 아닐까 생각한다.

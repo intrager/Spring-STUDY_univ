@@ -23,6 +23,13 @@ public class BoardEntity extends BaseEntity {
     // foreign key
     @ManyToOne  // board to member. board가 Many, member가 One
     private MemberEntity writer;    // 연관관계 지정 or 1 : N 관계 연결, 두 객체를 연결 : left join
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+    public void changeContent(String content) {
+        this.content = content;
+    }
 }
 /*
     현재 자바 관점(객체 관점)으로 보는 중

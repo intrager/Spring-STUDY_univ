@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1> Get by ID in memos </h1>
-<!-- Model을 통해 전달되는(model.addAttribute("memo", object_name)} memo 객체를 활용 -->
+<h1>template/home.html</h1>
 <table border="1" width="50%" height="50px">
-    <tr>
-        <td><span th:text="${memo.mno}"></span></td>
-        <td><span th:text="${memo.memoText}"></span></td>
-        <form action="#" th:action="@{'/memos/' + ${memo.mno}}" th:object="${memo}" th:method="delete">
-            <input type="submit" value="delete"/>
-        </form>
-    </tr>
+<tr>
+    <td><span th:text="${memo.mno}"></span></td>
+    <td><span th:text="${memo.memoText}"></span></td>
+</tr>
 </table>
-
 </body>
 </html>

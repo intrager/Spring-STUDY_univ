@@ -853,57 +853,53 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <a th:href="@{'/members/regform'}" class="btn btn-sm btn-primary">
-                  <i class="fas fa-registered">Register</i>
-                </a>
-                <form th:action="@{'/members'}" th:method="get">
-                  <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 350px;">
-                        <label class="btn btn-secondary active">
-                          <input type="radio" name="sort" id="option_a2" autocomplete="off" value="1" checked> 오름차순
-                        </label>
-                        <label class="btn btn-secondary">
-                          <input type="radio" name="sort" id="option_a3" autocomplete="off" value="2"> 내림차순
-                        </label>
-                        <select class="form-control" name="type" style="flex-basis:fit-content">
-                          <option value=""> 선택 </option>
-                          <option value="e">email</option>
-                          <option value="p">phone</option>
-                          <option value="a">address</option>
-                          <option value="ea">email+address</option>
-                        </select>
-                        <input type="text" name="keyword" class="form-control float-right" placeholder="keyword">
+                <h3 class="card-title">Member List</h3>
 
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                          </button>
-                        </div>
-                      </div>
+                <div class="card-tools">
+                <form th:action="@{'/members'}" th:method="get">
+                  <div class="input-group input-group-sm" style="width: 350px;">
+                    <select class="form-control" name="type">
+                      <option value=""> 선택 </option>
+                      <option value="e">email</option>
+                      <option value="p">phone</option>
+                      <option value="a">address</option>
+                      <option value="ea">email+address</option>
+                    </select>
+                    <input type="text" name="keyword" class="form-control float-right" placeholder="keyword">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
-            </div>
-            <!-- /.card-header -->
+              <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th style="width: 10px">seq</a></th> <!-- variable에 접근-->
+                      <th style="width: 10px">seq</th>
                       <th>id</th>
                       <th>name</th>
-                      <th>email</th>
-                      <th style="width: 40px">phone</th>
+                      <th style="width: 40px">email</th>
+                      <th>phone</th>
+                      <th>address</th>
                     </tr>
                   </thead>
                   <tbody>
+                    <!-- list의 크기만큼 반복 -->
                     <tr th:each="member : ${list.dtoList}">
-                      <th><a th:href="@{'/members/' + ${member.seq}}">[[${member.seq}]]</a></th> <!-- variable에 접근-->
-                      <th><span th:text="${member.id}"></span></th>
-                      <th><span th:text="${member.name}"></span></th>
-                      <th><span th:text="${member.email}"></span></th>
-                      <th><span th:text="${member.phone}"></span></th>
-                      <th><span th:text="${member.address}"></span></th>
+                      <td><a th:href="@{'/members/' + ${member.seq}}">
+                        [[${member.seq}]]</a></td>
+                      <td><span th:text="${member.id}"/></td>
+                      <td>
+                        <span th:text="${member.name}"/>
+                      </td>
+                      <td><span th:text="${member.email}"/></td>
+                      <td><span th:text="${member.phone}"/></td>
+                      <td><span th:text="${member.address}"/></td>
                     </tr>
                   </tbody>
                 </table>
@@ -914,15 +910,18 @@
                   <ul class="pagination justify-content-center m-0">
                     <li class="page-item" th:if="${list.prevPage}">
                       <a class="page-link" th:href="@{/members(page=${list.startPage - 1},
-                      type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">&laquo;</a>
+                      type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Prev</a>
                     </li>
-                    <li th:class="'page-item' + ${list.currentPage == page ? ' active' : ''}" th:each="page : ${list.pageList}">
+
+                    <li th:class="'page-item' + ${list.currentPage == page? ' active':''}"
+                        th:each="page : ${list.pageList}">
                       <a class="page-link" th:href="@{/members(page=${page},
                       type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
                     </li>
+
                     <li class="page-item" th:if="${list.nextPage}">
                       <a class="page-link" th:href="@{/members(page=${list.endPage + 1},
-                      type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">&raquo;</a>
+                      type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
                     </li>
                   </ul>
                 </nav>
@@ -931,7 +930,6 @@
             </div>
             <!-- /.card -->
           </div>
-          <!-- /.col -->
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

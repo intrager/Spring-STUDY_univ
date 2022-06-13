@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass   // @Table을 생성하지 않고, 서브 클래스에 추가
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
-public class BaseEntity {
+public abstract class BaseEntity {
     /**
      * BaseEntity에 abstract를 쓴 이유가 뭐임?
      */

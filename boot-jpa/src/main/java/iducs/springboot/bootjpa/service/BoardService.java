@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 public interface BoardService {
     Long register(Board dto);   // Board : DTO or Domain, create
     PageResultDTO<Board, Object[]> getList(PageRequestDTO pageRequestDTO);  // read list
+    Board getById(Long bno);
+    Long modify(Board dto);
+    void deleteWithRepliesById(Long bno);
 
     /**
      * 문법이 추가된 것 (Java8 ~)
