@@ -16,7 +16,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
 
-  <div th:replace="~{/nav :: navfrag}" />
+  <div th:replace="~{/nav :: navfragment}" />
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -64,7 +64,8 @@
               </div>
               <div class="form-group">
                 <label for="inputProjectLeader">Writer</label>
-                <input type="text" th:field="*{writerSeq}" id="inputProjectLeader" class="form-control">
+                <input type="text" th:value="*{session.login.seq}" th:name="writerSeq" readonly
+                       id="inputProjectLeader" class="form-control">
               </div>
               <div class="col-12">
                 <input type="submit" value="Register" class="btn btn-success">

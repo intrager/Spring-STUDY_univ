@@ -52,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
         Object result = boardRepository.getBoardByBno(bno);
         Object[] en = (Object[]) result;
         return entityToDto((BoardEntity) en[0],
-                (MemberEntity) en[1], (Long) en[2]);    // BoardDTO
+                (MemberEntity) en[1], (Long) en[2]);    // Board
     }
 
     @Override

@@ -34,4 +34,19 @@ class BootJpaApplicationTests {
             memberRepository.save(member);
         });
     }
+
+    @Test
+    void testAdmin() {
+        // Integer 데이터 흐름, Lambda 식 - 함수형 언어의 특징을 활용
+        String str = "admin";
+        MemberEntity entity = MemberEntity.builder()
+                .id(str)
+                .pw(str)
+                .name("name-"+str)
+                .email(str + "@induk.ac.kr")
+                .phone("phone-" + new Random().nextInt(50))
+                .address("address-" + new Random().nextInt(50))
+                .build();
+        memberRepository.save(entity);
+    }
 }

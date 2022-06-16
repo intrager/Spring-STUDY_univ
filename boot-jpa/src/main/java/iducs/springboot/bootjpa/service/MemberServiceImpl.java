@@ -111,6 +111,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member loginByEmail(Member member) {
+        Member memberDTO = null;
+        Object result = memberRepository.getMemberByEmail(member.getEmail(), member.getPw());
+        if(result != null) {
+            memberDTO = entityToDto((MemberEntity) result);
+        }
+        return memberDTO;
+    }
+
+    @Override
     public Member readByName(Member member) {
         return null;
     }
@@ -119,5 +129,4 @@ public class MemberServiceImpl implements MemberService {
     public Member readByEmail(String email) {
         return null;
     }
-
 }

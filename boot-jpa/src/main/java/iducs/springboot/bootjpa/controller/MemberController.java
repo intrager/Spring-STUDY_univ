@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
-@RequestMapping("/members") // localhost:8888/memobers로 시작
+@RequestMapping("/members") // localhost:8888/members로 시작
 public class MemberController {
 
     final MemberService memberService;
@@ -40,8 +43,18 @@ public class MemberController {
         // 정보를 전달받을 빈(empty) 객체를 보냄
         // List<Member> members = memberService.readAll();
         model.addAttribute("list", memberService.readListBy(pageRequestDTO));   // .getDtoList()까지 쓰는 건 비추
-        return "/members/members";
+        return "index";
     }
+
+//    // 멤버 메인 페이지
+//    @GetMapping("")
+//    public String getMembers(PageRequestDTO pageRequestDTO, Model model) {
+//        // PageRequestDTO.builder().build() or new PageRequestDTO() 가 pageRequestDTO 매개변수에 배정
+//        // 정보를 전달받을 빈(empty) 객체를 보냄
+//        // List<Member> members = memberService.readAll();
+//        model.addAttribute("list", memberService.readListBy(pageRequestDTO));   // .getDtoList()까지 쓰는 건 비추
+//        return "/members/members";
+//    }
 
     // 상세 페이지   // /members/일련변호 - @PathVariable 매핑해서 접근
     @GetMapping("/{idx}")
@@ -83,5 +96,30 @@ public class MemberController {
         Member member = memberService.readById(seq);
         memberService.delete(member);
         return "redirect:/members";
+    }
+
+    @GetMapping("/login")
+    public String getLoginForm(Model model) {
+        model.addAttribute("member", Member.builder().build());
+        return "/members/login";
+    }
+    @PostMapping("/login")
+    public String postLogin(@ModelAttribute("member") Member member, HttpServletRequest request) {
+        Member dto = null;
+        if((dto = memberService.loginByEmail(member)) != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("login", dto);
+            if(dto.getId().contains("admin")) {
+                session.setAttribute("isadmin", dto.getId());
+                System.out.println(session.getAttribute("isadmin"));
+            }
+            return "redirect:/";
+        }
+        else return "/members/loginfail";
+    }
+    @GetMapping("/logout")
+    public String getLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }

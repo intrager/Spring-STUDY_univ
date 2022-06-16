@@ -18,6 +18,8 @@ public interface MemberService {
     Member readByName(Member member);
     Member readByEmail(String email);
 
+    Member loginByEmail(Member member);
+
     /**
      * 주의 : DTO와 Entity의 pk number의 자료형을 똑같이 맞출 것
      */

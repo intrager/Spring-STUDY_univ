@@ -13,9 +13,4 @@ public class HomeController {
     public String getHome() {
         return "index";
     }
-
-    @GetMapping("members/simple") // url - localhost:8888/members/simple
-    public String getSimple() {
-        return "members/members";   // resources/templates/members/members.html
-    }
 }
