@@ -1,0 +1,73 @@
+package iducs.springboot.hjsboard.service;
+
+
+import iducs.springboot.hjsboard.domain.Board;
+import iducs.springboot.hjsboard.domain.PageRequestDTO;
+import iducs.springboot.hjsboard.domain.PageResultDTO;
+import iducs.springboot.hjsboard.entity.BoardEntity;
+import iducs.springboot.hjsboard.entity.MemberEntity;
+import iducs.springboot.hjsboard.repository.BoardRepository;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+@Service
+@Log4j2 // 화면에 출력되지 않고 로그 창에 뜸 -> 로그 파일에 저장됨, 시스템에 오류가 생겼을 때 등 오류를 남기기 위해서 사용하는 Annotation(도구)
+public class BoardServiceImpl implements BoardService {
+    private final BoardRepository boardRepository;
+
+    public BoardServiceImpl(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
+    @Override   // From JpaRepository
+    public Long register(Board dto) {   // Controller -> DTO 객체 -> Service
+        log.info("board register : " + dto);
+        BoardEntity boardEntity = dtoToEntity(dto);
+        boardRepository.save(boardEntity);
+        return boardEntity.getBno();    // 게시물 번호
+    }
+
+    @Override           // DTO    EN
+    public PageResultDTO<Board, Object[]> getList(PageRequestDTO pageRequestDTO) {
+        log.info(">>>>>" + pageRequestDTO);
+                // EN       DTO
+        Function<Object[], Board> fn =
+                (entities -> entityToDto((BoardEntity) entities[0], // entities를 entity로 이름을 바꿔도 상관없음
+                        (MemberEntity) entities[1]));
+        Page<Object[]> result =
+                boardRepository.getBoard(pageRequestDTO.getPageable(Sort.by("bno").descending()));
+        return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public Board getById(Long bno) {
+        Object result = boardRepository.getBoardByBno(bno);
+        Object[] en = (Object[]) result;
+        return entityToDto((BoardEntity) en[0],
+                (MemberEntity) en[1]);    // Board
+    }
+
+    @Override
+    public Long modify(Board dto) {
+        Optional<BoardEntity> result = boardRepository.findById(dto.getBno());
+        BoardEntity boardEntity = null;
+        if(result.isPresent()) {
+            boardEntity = (BoardEntity) result.get();
+            boardEntity.changeTitle(dto.getTitle());
+            boardEntity.changeContent(dto.getContent());
+            boardRepository.save(boardEntity);
+        }
+        return boardEntity.getBno();
+    }
+
+    @Override
+    public void deleteById(Long bno) {
+        boardRepository.deleteById(bno);
+    }
+}
