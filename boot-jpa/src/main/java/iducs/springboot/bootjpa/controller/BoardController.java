@@ -22,6 +22,6 @@ public class BoardController {
         // 11 ~ 15 번째의 레코드들을 접근함
         // PageRequestDTO.builder().build() or new PageRequestDTO()가 pageRequestDTO 매개변수에 배정
         model.addAttribute("list", boardService.getList(pageRequestDTO));
-        return "/boards/boards";    // view resolving
+        return "boards/list";    // view resolving
     }
 }
