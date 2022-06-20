@@ -27,12 +27,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Board Register</h1>
+            <h1>Board Update</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Board Register</li>
+              <li class="breadcrumb-item active">Board Update</li>
             </ol>
           </div>
         </div>
@@ -55,7 +55,8 @@
               </div>
             </div>
             <div class="card-body">
-              <form th:action="@{'/boards'}" th:object="${dto}" th:method="put">
+              <form th:action="@{'/boards/' + ${board.bno} + '/upform'}" th:object="${board}" th:method="post">
+                <input type="hidden" name="bno" th:field="*{bno}" th:value="*{bno}" id="inputBno" class="form-control"/>
                 <div class="form-group">
                   <label for="inputName">Title</label>
                   <input type="text" th:field="*{title}" id="inputName" class="form-control">
@@ -66,12 +67,14 @@
                 </div>
                 <div class="form-group">
                   <label for="inputProjectLeader">Writer</label>
-                  <input type="text" th:value="*{session.login.seq}" th:name="writerSeq" readonly
+                  <input type="text" th:value="${session.login.seq}" th:name="*{writerSeq}" readonly
                          id="inputProjectLeader" class="form-control">
                 </div>
-                <div class="col-12">
-                  <input type="submit" value="Register" class="btn btn-success">
-                  <input type="reset" value="Cancel" class="btn btn-success float-right">
+                <div class="col-6">
+                  <input type="submit" value="Modify" class="btn btn-success">
+                </div>
+                <div class="col-6 btn btn-success float-right">
+                  <a th:href="@{'/boards/' + ${board.bno}}" value="이전 화면"></a>
                 </div>
               </form>
             </div>

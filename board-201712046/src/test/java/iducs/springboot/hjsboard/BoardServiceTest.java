@@ -3,11 +3,15 @@ package iducs.springboot.hjsboard;
 import iducs.springboot.hjsboard.domain.Board;
 import iducs.springboot.hjsboard.domain.PageRequestDTO;
 import iducs.springboot.hjsboard.domain.PageResultDTO;
+import iducs.springboot.hjsboard.entity.BoardEntity;
+import iducs.springboot.hjsboard.repository.BoardRepository;
 import iducs.springboot.hjsboard.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -16,6 +20,8 @@ public class BoardServiceTest {
     // 필드 주입은 트렌드가 아니다?! 생성자 주입이 직접적용, 지연적용, 안정성 면에서 더 좋지만 그냥 일단 필드 주입을 함.
     @Autowired
     BoardService boardService;
+    @Autowired
+    BoardRepository boardRepository;
 
     @Test
     public void testRegister() {    // 이 코드들은 Controller로 감
@@ -37,6 +43,21 @@ public class BoardServiceTest {
         PageResultDTO<Board, Object[]> result = boardService.getList(pageRequestDTO);
         for(Board dto : result.getDtoList())    // 출력용
             System.out.println(dto.getBno() + " : " + dto.getTitle());
+    }
+
+    @Transactional
+    @Test
+    public void testLazyLoading() {
+        Optional<BoardEntity> result = boardRepository.findById(10L);
+        BoardEntity boardEntity = result.get();
+        System.out.println(boardEntity.getTitle());
+        System.out.println(boardEntity.getContent());
+    }
+
+    @Test
+    public void testDeleteWithRepliesById() {
+        Long bno = 3L;
+        boardService.deleteWithRepliesById(bno);
     }
 }
 /*  5/26

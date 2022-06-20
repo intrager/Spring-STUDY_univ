@@ -1,6 +1,5 @@
 package iducs.springboot.hjsboard.controller;
 
-
 import iducs.springboot.hjsboard.domain.Member;
 import iducs.springboot.hjsboard.domain.PageRequestDTO;
 import iducs.springboot.hjsboard.service.MemberService;
@@ -15,8 +14,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/members") // localhost:8888/members로 시작
 public class MemberController {
 
-    final MemberService memberService;
-    // 생성자 주입 : (Constructor Injection) vs. @Autowired
+    public final MemberService memberService;
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
@@ -25,7 +23,13 @@ public class MemberController {
     @GetMapping("/regform")
     public String getRegform(Model model) {
         model.addAttribute("member", Member.builder().build());
-        return "/members/regform";  // view resolving
+        return "members/regform";  // view resolving
+    }
+
+    @GetMapping("")
+    public String getMembers(PageRequestDTO pageRequestDTO, Model model) {
+        model.addAttribute("list", memberService.readListBy(pageRequestDTO));
+        return "members/members";    // view resolving
     }
 
     // 멤버 등록
@@ -33,15 +37,15 @@ public class MemberController {
     public String postMember(@ModelAttribute("member") Member member, Model model) {
         memberService.create(member);
         model.addAttribute("member", member);
-        return "/members/login";
+        return "members/login";
     }
 
-    // 상세 페이지   // /members/일련변호 - @PathVariable 매핑해서 접근
+    // 상세 페이지
     @GetMapping("/{idx}")
     public String getMember(@PathVariable("idx") Long seq, Model model) {
         Member member = memberService.readById(seq);
         model.addAttribute("member", member);
-        return "/members/member";   // view resolving : member.html
+        return "members/member";   // view resolving : member.html
     }
 
     // 수정 페이지
@@ -50,7 +54,7 @@ public class MemberController {
         // 정보를 전달받을 빈(empty) 객체를 보냄
         Member member = memberService.readById(seq);
         model.addAttribute("member", member);
-        return "/members/upform";
+        return "members/upform";
     }
 
     // 멤버 정보 수정
@@ -58,16 +62,16 @@ public class MemberController {
     public String putMember(@ModelAttribute("member") Member member, Model model) { // ModelAttribute는 form에서 가져오는 거
         memberService.update(member);
         model.addAttribute("member", member);
-        return "/members/member";
+        return "members/member";
     }
 
     // 삭제 페이지
     @GetMapping("/{idx}/delform")
-    public String getDelform(@PathVariable("idx") Long seq, Model model) {
+    public String getDelForm(@PathVariable("idx") Long seq, Model model) {
         // 정보를 전달받을 빈(empty) 객체를 보냄
         Member member = memberService.readById(seq);
         model.addAttribute("member", member);
-        return "/members/delform";
+        return "members/delform";
     }
 
     // 멤버 삭제
@@ -81,7 +85,7 @@ public class MemberController {
     @GetMapping("/login")
     public String getLoginForm(Model model) {
         model.addAttribute("member", Member.builder().build());
-        return "/members/login";
+        return "members/login";
     }
     @PostMapping("/login")
     public String postLogin(@ModelAttribute("member") Member member, HttpServletRequest request) {
@@ -95,11 +99,12 @@ public class MemberController {
             }
             return "redirect:/";
         }
-        else return "/members/login";
+        else return "members/login";
     }
     @GetMapping("/logout")
     public String getLogout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
+
 }

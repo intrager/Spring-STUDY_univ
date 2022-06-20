@@ -80,6 +80,20 @@
                                     <label for="inputAddress">Address</label>
                                     <input type="text" th:field="*{address}" id="inputAddress" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <select hidden th:field="*{deny}" >
+                                        <option th:value="'general'" th:text="일반회원" selected ></option>
+                                        <option th:value="'ben'" th:text="차단됨" ></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLevel">Level</label>
+                                    <select th:field="*{level}" id="inputLevel" class="form-control">
+                                        <option th:value="'1'" th:text="1단계" selected ></option>
+                                        <option th:value="'2'" th:text="2단계" ></option>
+                                        <option th:value="'3'" th:text="3단계" ></option>
+                                    </select>
+                                </div>
                                 <div class="col-12">
                                     <input type="submit" value="Register" class="btn btn-success">
                                     <input type="reset" value="Cancel" class="btn btn-success float-right">
@@ -87,7 +101,6 @@
                             </form>
                         </div>
                         <!-- /.card-body -->
-
                     </div>
                     <!-- /.card -->
 

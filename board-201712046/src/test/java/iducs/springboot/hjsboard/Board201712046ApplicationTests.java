@@ -24,8 +24,10 @@ class Board201712046ApplicationTests {
                     .pw("pw " + i)
                     .name("name " + i)
                     .email("email-" + i + "@induk.ac.kr")
-                    .phone("phone-" + new Random().nextInt(50))
+                    .phone("010 - " + new Random().nextInt(50) + "-" + new Random().nextInt(50))
                     .address("address " + i)
+                    .deny("general")
+                    .level("" + (new Random().nextInt(3) + 1))
                     .build();
             memberRepository.save(member);
         });
@@ -42,6 +44,7 @@ class Board201712046ApplicationTests {
                 .email(str + "@induk.ac.kr")
                 .phone("phone-" + new Random().nextInt(50))
                 .address("address-" + new Random().nextInt(50))
+                .level("" + (new Random().nextInt(3) + 1))
                 .build();
         memberRepository.save(entity);
     }

@@ -20,4 +20,7 @@ public class Board {
     private String writerId;
     private String writerName;
     private String writerEmail;
+    private String writerDeny;
+
+    private int replyCount; // 추가적인 필드 : 게시물이 댓글 수
 }

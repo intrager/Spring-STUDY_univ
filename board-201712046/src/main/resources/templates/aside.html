@@ -7,6 +7,9 @@
 <body>
     <!-- Main Sidebar Container -->
     <aside th:fragment="asidefragment" class="main-sidebar sidebar-dark-primary elevation-4">
+        <th:block th:if="${session.login != null}">
+            <div th:if="${session.login.deny == 'ben'}"><script>alert('차단된 사용자입니다!')</script></div>
+        </th:block>
         <!-- Brand Logo -->
         <a th:href="@{'/'}" class="brand-link">
             <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -79,8 +82,8 @@
                                     <p>Member Info</p>
                                 </a>
                             </li>
-                            <li class="nav-item" th:unless="${session.isadmin eq null}">
-                                <a th:href="@{'/members/members'}" class="nav-link">
+                            <li class="nav-item" th:if="${session.isadmin} != null and ${session.login} != null">
+                                <a th:href="@{'/members'}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Member List</p>
                                 </a>
@@ -97,13 +100,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{'boards'}" class="nav-link">
+                                <a th:href="@{'/boards'}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Board List</p>
                                 </a>
                             </li>
                             <li class="nav-item" th:if="${session.login != null}">
-                                <a th:href="@{'boards/regform'}" class="nav-link">
+                                <a th:href="@{'/boards/regform'}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Board Register</p>
                                 </a>

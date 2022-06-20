@@ -14,9 +14,7 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
 public abstract class BaseEntity {
-    /**
-     * BaseEntity에 abstract를 쓴 이유가 뭐임?
-     */
+
     @CreatedDate
     @Column(name = "regdate", updatable = false)
     private LocalDateTime regDate;

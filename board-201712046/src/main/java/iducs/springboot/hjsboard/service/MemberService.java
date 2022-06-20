@@ -34,6 +34,8 @@ public interface MemberService {
                 .email(member.getEmail())
                 .phone(member.getPhone())
                 .address(member.getAddress())
+                .deny(member.getDeny())
+                .level(member.getLevel())
                 .build();
         return entity;
     }
@@ -48,6 +50,8 @@ public interface MemberService {
                 .email(entity.getEmail())
                 .phone(entity.getPhone())
                 .address(entity.getAddress())
+                .deny(entity.getDeny())
+                .level(entity.getLevel())
                 .build();
         return member;
     }

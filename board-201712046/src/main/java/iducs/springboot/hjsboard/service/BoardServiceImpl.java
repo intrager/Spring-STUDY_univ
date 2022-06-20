@@ -7,6 +7,7 @@ import iducs.springboot.hjsboard.domain.PageResultDTO;
 import iducs.springboot.hjsboard.entity.BoardEntity;
 import iducs.springboot.hjsboard.entity.MemberEntity;
 import iducs.springboot.hjsboard.repository.BoardRepository;
+import iducs.springboot.hjsboard.repository.ReplyRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -20,9 +21,11 @@ import java.util.function.Function;
 @Log4j2 // 화면에 출력되지 않고 로그 창에 뜸 -> 로그 파일에 저장됨, 시스템에 오류가 생겼을 때 등 오류를 남기기 위해서 사용하는 Annotation(도구)
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository) {
+    public BoardServiceImpl(BoardRepository boardRepository, ReplyRepository replyRepository) {
         this.boardRepository = boardRepository;
+        this.replyRepository = replyRepository;
     }
 
     @Override   // From JpaRepository
@@ -39,9 +42,9 @@ public class BoardServiceImpl implements BoardService {
                 // EN       DTO
         Function<Object[], Board> fn =
                 (entities -> entityToDto((BoardEntity) entities[0], // entities를 entity로 이름을 바꿔도 상관없음
-                        (MemberEntity) entities[1]));
+                        (MemberEntity) entities[1], (Long) entities[2]));
         Page<Object[]> result =
-                boardRepository.getBoard(pageRequestDTO.getPageable(Sort.by("bno").descending()));
+                boardRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
         return new PageResultDTO<>(result, fn);
     }
 
@@ -50,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
         Object result = boardRepository.getBoardByBno(bno);
         Object[] en = (Object[]) result;
         return entityToDto((BoardEntity) en[0],
-                (MemberEntity) en[1]);    // Board
+                (MemberEntity) en[1], (Long) en[2]);    // Board
     }
 
     @Override
@@ -66,8 +69,10 @@ public class BoardServiceImpl implements BoardService {
         return boardEntity.getBno();
     }
 
+    @Transactional
     @Override
-    public void deleteById(Long bno) {
+    public void deleteWithRepliesById(Long bno) {
+        replyRepository.deleteByBno(bno);
         boardRepository.deleteById(bno);
     }
 }

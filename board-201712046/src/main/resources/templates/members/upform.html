@@ -84,9 +84,21 @@
                                     <label for="inputAddress">Address</label>
                                     <input type="text" name="address" th:field="*{address}" id="inputAddress" class="form-control">
                                 </div>
-                                <div class="col-12">
-                                    <input type="submit" value="Register" class="btn btn-success">
-                                    <a th:href="@{'/boards/' + ${member.seq}}" value="Cancel" class="btn btn-success float-right"></a>
+                                <div class="form-group" th:if="${session.isadmin != null}">
+                                    <select th:field="*{deny}" >
+                                        <option th:value="'general'" th:text="일반회원" selected ></option>
+                                        <option th:value="'ben'" th:text="차단됨" ></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLevel">Level</label>
+                                    <input type="text" name="level" th:field="*{level}" id="inputLevel" class="form-control" readonly />
+                                </div>
+                                <div class="col-6">
+                                    <input type="submit" value="Update" class="btn btn-success">
+                                </div>
+                                <div class="col-6 btn btn-success float-right">
+                                    <a th:href="@{'/members/' + ${member.seq}}" value="이전 화면"></a>
                                 </div>
                             </form>
                         </div>

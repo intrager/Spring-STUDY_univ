@@ -38,4 +38,10 @@ public class MemberEntity {
 
     @Column(length = 100)
     private String address;
+
+    @Column(length = 10)
+    private String deny;
+
+    @Column(length = 10)
+    private String level;
 }

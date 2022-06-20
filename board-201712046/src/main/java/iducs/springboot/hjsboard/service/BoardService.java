@@ -13,7 +13,7 @@ public interface BoardService {
     PageResultDTO<Board, Object[]> getList(PageRequestDTO pageRequestDTO);  // read list
     Board getById(Long bno);
     Long modify(Board dto);
-    void deleteById(Long bno);
+    void deleteWithRepliesById(Long bno);
 
     /**
      * 문법이 추가된 것 (Java8 ~)
@@ -23,15 +23,15 @@ public interface BoardService {
         MemberEntity member = MemberEntity.builder()
                 .seq(dto.getWriterSeq())
                 .build();
-        BoardEntity board = BoardEntity.builder()
+        BoardEntity boardEntity = BoardEntity.builder()
                 .bno(dto.getBno())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(member)
                 .build();
-        return board;
+        return boardEntity;
     }
-    default Board entityToDto(BoardEntity entity, MemberEntity member) {
+    default Board entityToDto(BoardEntity entity, MemberEntity member, Long replyCount) {
         Board dto = Board.builder()
                 .bno(entity.getBno())
                 .title(entity.getTitle())
@@ -40,8 +40,10 @@ public interface BoardService {
                 .writerId(member.getId())
                 .writerName(member.getName())
                 .writerEmail(member.getEmail())
+                .writerDeny(member.getDeny())
                 .regDate(entity.getRegDate())
                 .modDate(entity.getModDate())
+                .replyCount(replyCount.intValue())
                 .build();
         return dto;
     }

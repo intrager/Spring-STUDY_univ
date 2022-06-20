@@ -69,6 +69,12 @@ public class MemberServiceImpl implements MemberService {
         String keyword = pageRequestDTO.getKeyword();
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
+        if(type.contains("1"))  // 1단계
+            conditionBuilder.or(qMemberEntity.level.contains(keyword));
+        if(type.contains("2"))  // 2단계
+            conditionBuilder.or(qMemberEntity.level.contains(keyword));
+        if(type.contains("3"))  // 3단계
+            conditionBuilder.or(qMemberEntity.level.contains(keyword));
         if(type.contains("e"))  // email로 검색
             conditionBuilder.or(qMemberEntity.email.contains(keyword));
         if(type.contains("p"))  // phone으로 검색
