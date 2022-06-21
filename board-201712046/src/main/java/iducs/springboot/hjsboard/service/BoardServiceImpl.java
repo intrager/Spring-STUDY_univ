@@ -1,6 +1,7 @@
 package iducs.springboot.hjsboard.service;
 
 
+import com.querydsl.core.BooleanBuilder;
 import iducs.springboot.hjsboard.domain.Board;
 import iducs.springboot.hjsboard.domain.PageRequestDTO;
 import iducs.springboot.hjsboard.domain.PageResultDTO;
@@ -8,6 +9,7 @@ import iducs.springboot.hjsboard.entity.BoardEntity;
 import iducs.springboot.hjsboard.entity.MemberEntity;
 import iducs.springboot.hjsboard.repository.BoardRepository;
 import iducs.springboot.hjsboard.repository.ReplyRepository;
+import iducs.springboot.hjsboard.repository.SearchBoardRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -22,10 +24,12 @@ import java.util.function.Function;
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
+    private final SearchBoardRepository searchBoardRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository, ReplyRepository replyRepository) {
+    public BoardServiceImpl(BoardRepository boardRepository, ReplyRepository replyRepository, SearchBoardRepository searchBoardRepository) {
         this.boardRepository = boardRepository;
         this.replyRepository = replyRepository;
+        this.searchBoardRepository = searchBoardRepository;
     }
 
     @Override   // From JpaRepository
@@ -36,20 +40,24 @@ public class BoardServiceImpl implements BoardService {
         return boardEntity.getBno();    // 게시물 번호
     }
 
-    @Override           // DTO    EN
+    @Override
     public PageResultDTO<Board, Object[]> getList(PageRequestDTO pageRequestDTO) {
         log.info(">>>>>" + pageRequestDTO);
-                // EN       DTO
+        BooleanBuilder booleanBuilder = searchBoardRepository.searchPage(pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pa);
+
         Function<Object[], Board> fn =
                 (entities -> entityToDto((BoardEntity) entities[0], // entities를 entity로 이름을 바꿔도 상관없음
                         (MemberEntity) entities[1], (Long) entities[2]));
         Page<Object[]> result =
                 boardRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
+
         return new PageResultDTO<>(result, fn);
     }
 
+    @Transactional
     @Override
     public Board getById(Long bno) {
+        boardRepository.updateView(bno);
         Object result = boardRepository.getBoardByBno(bno);
         Object[] en = (Object[]) result;
         return entityToDto((BoardEntity) en[0],

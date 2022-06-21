@@ -35,6 +35,7 @@ public class SearchBoardRepositoryImpl
 
     @Override
     public BoardEntity searchBoard() {
+        // test code
         return null;
     }
 

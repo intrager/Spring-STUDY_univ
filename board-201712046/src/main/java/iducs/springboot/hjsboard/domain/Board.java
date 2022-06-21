@@ -13,6 +13,7 @@ public class Board {
     private Long bno;
     private String title;
     private String content; // <- BoardEntity
+    private Long views;
     private LocalDateTime regDate;  // <-- BoardEntity <-- BaseEntity // 게시글 등록
     private LocalDateTime modDate;  // <-- BoardEntity <-- BaseEntity
 

@@ -27,6 +27,7 @@ public interface BoardService {
                 .bno(dto.getBno())
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                .views(dto.getViews())
                 .writer(member)
                 .build();
         return boardEntity;
@@ -36,6 +37,7 @@ public interface BoardService {
                 .bno(entity.getBno())
                 .title(entity.getTitle())
                 .content(entity.getContent())
+                .views(entity.getViews())
                 .writerSeq(member.getSeq())
                 .writerId(member.getId())
                 .writerName(member.getName())

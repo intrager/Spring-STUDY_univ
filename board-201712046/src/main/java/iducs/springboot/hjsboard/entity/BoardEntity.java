@@ -19,6 +19,7 @@ public class BoardEntity extends BaseEntity {
 
     private String title;
     private String content;
+    private Long views;
 
     // foreign key
     @ManyToOne  // board to member. board가 Many, member가 One

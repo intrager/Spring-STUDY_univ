@@ -44,6 +44,7 @@ class Board201712046ApplicationTests {
                 .email(str + "@induk.ac.kr")
                 .phone("phone-" + new Random().nextInt(50))
                 .address("address-" + new Random().nextInt(50))
+                .deny("admin")
                 .level("" + (new Random().nextInt(3) + 1))
                 .build();
         memberRepository.save(entity);

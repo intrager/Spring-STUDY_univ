@@ -29,6 +29,7 @@ public class BoardServiceTest {
             Board dto = Board.builder()
                     .title("title" + i)
                     .content("Content...")
+                    .views(0L)
                     .writerSeq(Long.valueOf("" + i))
                     .build();
             boardService.register(dto);
