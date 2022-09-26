@@ -1,9 +1,9 @@
 package iducs.springboot.hjsboard.controller;
 
 import iducs.springboot.hjsboard.domain.Board;
-import iducs.springboot.hjsboard.domain.Member;
 import iducs.springboot.hjsboard.domain.PageRequestDTO;
 import iducs.springboot.hjsboard.service.BoardService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

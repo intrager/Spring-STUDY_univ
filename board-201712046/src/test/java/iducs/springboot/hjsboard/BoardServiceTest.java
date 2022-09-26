@@ -9,6 +9,7 @@ import iducs.springboot.hjsboard.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -36,15 +37,15 @@ public class BoardServiceTest {
         });
     }
 
-    @Test
-    public void testList() {
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setPage(3);  // setPage(3)을 통해서 현재 페이지를 1 -> 3 설정
-        pageRequestDTO.setSize(4);
-        PageResultDTO<Board, Object[]> result = boardService.getList(pageRequestDTO);
-        for(Board dto : result.getDtoList())    // 출력용
-            System.out.println(dto.getBno() + " : " + dto.getTitle());
-    }
+//    @Test
+//    public void testList() {
+//        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+//        pageRequestDTO.setPage(3);  // setPage(3)을 통해서 현재 페이지를 1 -> 3 설정
+//        pageRequestDTO.setSize(4);
+//        PageResultDTO<Board, Object[]> result = boardService.getList(pageRequestDTO);
+//        for(Board dto : result.getDtoList())    // 출력용
+//            System.out.println(dto.getBno() + " : " + dto.getTitle());
+//    }
 
     @Transactional
     @Test

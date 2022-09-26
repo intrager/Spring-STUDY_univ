@@ -66,6 +66,19 @@
                          id="inputClientCompany" class="form-control">
                 </div>
                 <div class="form-group">
+                  <label for="inputCategory">Category</label>
+                  <select th:field="*{category}" id="inputCategory" class="form-control">
+                    <option th:value="'engine'" th:text="공학" selected ></option>
+                    <option th:value="'sport'" th:text="예체능계" ></option>
+                    <option th:value="'human'" th:text="인문계" ></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="inputViews">Views</label>
+                  <input type="text" value="1" name="views"
+                         id="inputViews" class="form-control" readonly>
+                </div>
+                <div class="form-group">
                   <label for="inputProjectLeader">Writer</label>
                   <input type="text" th:value="${session.login.getSeq()}" th:name="writerSeq" readonly
                          id="inputProjectLeader" class="form-control">

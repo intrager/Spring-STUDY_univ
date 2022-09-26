@@ -9,6 +9,7 @@ import iducs.springboot.hjsboard.domain.PageResultDTO;
 import iducs.springboot.hjsboard.entity.MemberEntity;
 import iducs.springboot.hjsboard.entity.QMemberEntity;
 import iducs.springboot.hjsboard.repository.MemberRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Service
+@Log4j2
 public class MemberServiceImpl implements MemberService {
 
     final MemberRepository memberRepository;  // DI(Dependency Injection)
@@ -67,6 +69,8 @@ public class MemberServiceImpl implements MemberService {
             return booleanBuilder;
         }
         String keyword = pageRequestDTO.getKeyword();
+
+        log.info(">>>>>>>> " + pageRequestDTO);
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
         if(type.contains("1"))  // 1단계

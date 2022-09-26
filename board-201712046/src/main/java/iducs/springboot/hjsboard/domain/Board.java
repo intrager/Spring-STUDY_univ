@@ -14,6 +14,7 @@ public class Board {
     private String title;
     private String content; // <- BoardEntity
     private Long views;
+    private String category;
     private LocalDateTime regDate;  // <-- BoardEntity <-- BaseEntity // 게시글 등록
     private LocalDateTime modDate;  // <-- BoardEntity <-- BaseEntity
 

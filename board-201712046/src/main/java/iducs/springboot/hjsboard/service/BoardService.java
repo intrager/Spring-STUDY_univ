@@ -5,6 +5,7 @@ import iducs.springboot.hjsboard.domain.PageRequestDTO;
 import iducs.springboot.hjsboard.domain.PageResultDTO;
 import iducs.springboot.hjsboard.entity.BoardEntity;
 import iducs.springboot.hjsboard.entity.MemberEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +29,7 @@ public interface BoardService {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .views(dto.getViews())
+                .category(dto.getCategory())
                 .writer(member)
                 .build();
         return boardEntity;
@@ -38,6 +40,7 @@ public interface BoardService {
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .views(entity.getViews())
+                .category(entity.getCategory())
                 .writerSeq(member.getSeq())
                 .writerId(member.getId())
                 .writerName(member.getName())
