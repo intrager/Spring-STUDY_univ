@@ -31,35 +31,35 @@
 - Thymeleaf 3.0.15
 
 ### 로그인 전 메뉴창
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/77195486/197456972-d398b29a-0013-4b5e-927a-38587aa9baa8.png)
 
 ### 회원 로그인 시 메뉴창
-![img_10.png](img_10.png)
+![image](https://user-images.githubusercontent.com/77195486/197457003-4cd4ecee-3ee8-4e15-8806-370fc9da63b5.png)
 
 ### 회원 로그인 시 (관리자)
 #### 일반 회원과는 다르게 회원 목록을 볼 수 있습니다.
-![img_4.png](img_4.png)
+![image](https://user-images.githubusercontent.com/77195486/197457040-7c7e3c11-4fcf-4c02-ad27-7fd4b1e351cb.png)
 
 ### 회원 상세 정보
-![img_1.png](img_1.png)
+![image](https://user-images.githubusercontent.com/77195486/197457095-bb5013ff-e4cc-47a2-b3a2-f308df8b8954.png)
 
 ### 회원 목록(관리자 상태)
-![img_2.png](img_2.png)
+![image](https://user-images.githubusercontent.com/77195486/197457122-01af1010-9e28-47d2-9d9e-a38247277745.png)
 
 ### 회원 검색
-![img_3.png](img_3.png)
+![image](https://user-images.githubusercontent.com/77195486/197457143-eaee9dac-1430-4f02-8e7c-be14d22baebe.png)
 
 ### 게시글 목록 (카테고리 검색 시)
-![img_6.png](img_6.png)
+![image](https://user-images.githubusercontent.com/77195486/197457156-4418e7dd-3c01-4d67-9ea5-8986cc38f508.png)
 
 ### 게시글 상세보기
-![img_7.png](img_7.png)
+![image](https://user-images.githubusercontent.com/77195486/197457167-f549fea4-e1c1-443e-b79f-a23364ada091.png)
 
 ### 회원 차단
 
 #### 차단 설정
-![img_8.png](img_8.png)
+![image](https://user-images.githubusercontent.com/77195486/197457183-6804be1c-8576-4c7d-b901-5d3957840012.png)
 #### 차단된 사용자 (페이지 넘어갈 때마다 경고 발생)
-![img_9.png](img_9.png)
+![image](https://user-images.githubusercontent.com/77195486/197457196-6ac874b6-dd6d-4609-9863-4e7d40ad0821.png)
 #### 차단된 사용자의 게시물
-![img_11.png](img_11.png)
+![image](https://user-images.githubusercontent.com/77195486/197457207-575cd62f-b34b-491e-a039-c3b6ecd2288f.png)
